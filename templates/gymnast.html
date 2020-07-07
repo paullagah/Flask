@@ -4,11 +4,30 @@
    <div class="form">
         <form method="post" action="">
             {{ form.hidden_tag() }}
+            <div class="form-group">
             {{ form.firstname.label }}
             {{ form.firstname }}
+            {% if form.firstname.errors %}
+                <div class="error">
+                    {% for error in form.firstname.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
             <br>
+            <div class="form-group">
             {{ form.lastname.label }}
             {{ form.lastname }}
+
+            {% if form.lastname.errors %}
+                <div class="error">
+                    {% for error in form.lastname.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
             <br>
             {{ form.submit }}
         </form>

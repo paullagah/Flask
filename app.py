@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, url_for, redirect
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
@@ -7,8 +7,7 @@ from forms import GymnastsForm
 
 app = Flask(__name__)
 
-# make more secure <---------------------------------------
-app.config['SECRET KEY'] = environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = '919c92fab903330df5b2f66c22d3b22b'       #environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + \
                                         environ.get('MYSQL_USER') + \
@@ -50,10 +49,19 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-@app.route('/add')
+@app.route('/add', methods=['GET', 'POST'])
 def add():
     form = GymnastsForm()
-    return render_template('gymnast.html', title='Add a gymnast', form=form)
+    if form.validate_on_submit():
+        gymnast_data = Gymnasts(
+            firstname=form.firstname.data,
+            lastname=form.lastname.data
+        )
+        db.session.add(gymnast_data)
+        db.session.commit()
+        return redirect(url_for('home'))
+    else:
+        return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 @app.route('/create')
 def create():
