@@ -1,4 +1,4 @@
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
