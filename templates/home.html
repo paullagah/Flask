@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+    <h1>Homepage - Welcome!</h1>
+
+    {% for post in posts %}
+        <div>
+            <h3>{{ post.gymnast_id }}</h3>
+            <p><b>First name: </b> {{ post.firstname }}</p>
+            <p><b>Last name: </b> {{ post.lastname }}</p>
+        </div>
+    {% endfor %}
+
+{% endblock %}
