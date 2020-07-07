@@ -3,6 +3,7 @@ from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 
+from forms import GymnastsForm
 
 app = Flask(__name__)
 
@@ -49,6 +50,10 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+@app.route('/add')
+def add():
+    form = GymnastsForm()
+    return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 @app.route('/create')
 def create():
