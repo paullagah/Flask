@@ -68,7 +68,7 @@ def add():
 @app.route('/create')
 def create():
     db.create_all()
-    gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=29)
+    gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=28)
     db.session.add(gymnast)
     db.session.commit()
     return "Added the table and populated it with a Record" and redirect(url_for('home'))
