@@ -29,6 +29,19 @@
             {% endif %}
             </div>
             <br>
+            <div class="form-group">
+            {{ form.age.label }}
+            {{ form.age }}
+
+            {% if form.age.errors %}
+                <div class="error">
+                    {% for error in form.age.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+            <br>
             {{ form.submit }}
         </form>
    </div>

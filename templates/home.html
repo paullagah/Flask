@@ -5,18 +5,10 @@
 
     {% for Gymnasts in gymnasts %}
         <div>
-            <table>
-                <tr>
-                    <th>Gymnast ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                </tr>
-                <tr>
-                    <td><h3>{{ Gymnasts.gymnast_id }}</h3></td>
-                    <td><p> {{ Gymnasts.firstname }}</p></td>
-                    <td><p> {{ Gymnasts.lastname }}</p></td>
-                </tr>
-            </table>
+            <h3>Gymnast ID: {{ Gymnasts.gymnast_id }}</h3>
+            <p> <b>First name: </b>{{ Gymnasts.firstname }}</p>
+            <p> <b>Last name: </b>{{ Gymnasts.lastname }}</p>
+            <p> <b>Age: </b>{{ Gymnasts.age }}</p>
         </div>
     {% endfor %}
 

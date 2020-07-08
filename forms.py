@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, Length
+from wtforms import StringField, SubmitField, IntegerField
+from wtforms.validators import DataRequired, Length, NumberRange
 
 
 class GymnastsForm(FlaskForm):
@@ -16,6 +16,13 @@ class GymnastsForm(FlaskForm):
         validators=[
             DataRequired(),
             Length(min=1, max=30)
+        ]
+    )
+    age = IntegerField(
+        'Age',
+        validators=[
+            DataRequired(),
+            NumberRange(min=0, max=110)
         ]
     )
 

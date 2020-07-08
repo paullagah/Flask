@@ -28,6 +28,7 @@ class Gymnasts(db.Model):
     gymnast_id = db.Column(db.Integer, primary_key=True, unique=True)
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return ''.join(
@@ -55,7 +56,8 @@ def add():
     if form.validate_on_submit():
         gymnast_data = Gymnasts(
             firstname=form.firstname.data,
-            lastname=form.lastname.data
+            lastname=form.lastname.data,
+            age=form.age.data
         )
         db.session.add(gymnast_data)
         db.session.commit()
@@ -66,11 +68,11 @@ def add():
 @app.route('/create')
 def create():
     db.create_all()
-    gymnast = Gymnasts(firstname='Paul', lastname='Lagah')
+    gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=29)
     db.session.add(gymnast)
     db.session.commit()
-    return "Added the table and populated it with a Record"
-    return redirect(url_for('home'))
+    return "Added the table and populated it with a Record" and redirect(url_for('home'))
+
 
 
 @app.route('/delete')
