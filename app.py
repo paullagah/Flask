@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, redirect
 from flask import render_template
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
@@ -70,6 +70,7 @@ def create():
     db.session.add(gymnast)
     db.session.commit()
     return "Added the table and populated it with a Record"
+    return redirect(url_for('home'))
 
 
 @app.route('/delete')
@@ -77,7 +78,7 @@ def delete():
     db.drop_all()
     db.session.query(Gymnasts).delete()
     db.session.commit()
-    return "Bye Bye Gymnast"
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
