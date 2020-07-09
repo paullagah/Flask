@@ -50,11 +50,13 @@ def load_user(id):
 
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    firstname = db.Column(db.String(30), nullable=False)
+    lastname = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(300), nullable=False, unique=True)
     password = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
-        return ''.join(['UserID: ', str(self.id), '\r\n', 'Email: ', self.email])
+        return ''.join(['UserID: ', str(self.id), '\r\n', 'Email: ', self.email, 'Name: ', self.firstname, ' ', self.lastname])
 
 
 @app.route('/')
@@ -92,11 +94,11 @@ def register():
     if form.validate_on_submit():
         hash_pw = bcrypt.generate_password_hash(form.password.data)
 
-        user = Users(email=form.email.data, password=hash_pw)
+        user = Users(email=form.email.data, password=hash_pw, firstname=form.firstname.data, lastname=form.lastname.data)
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('register'))
+        return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
 

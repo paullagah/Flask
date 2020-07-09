@@ -1,11 +1,33 @@
 {% extends "layout.html" %}
 
 {% block body_content %}
-    <h1>Register Page</h1>
-    <p>Sign up here!</p>
+    <h1>Registration Page</h1>
+    <p>Please fill out the details below</p>
     <div class="form">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
+            <div class="form_group">
+                {{ form.firstname.label }}
+                {{ form.firstname }}
+                {% if form.firstname.errors %}
+                    <div class="error">
+                        {% for error in form.firstname.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div><br>
+            <div class="form_group">
+                {{ form.lastname.label }}
+                {{ form.lastname }}
+                {% if form.lastname.errors %}
+                    <div class="error">
+                        {% for error in form.lastname.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div><br>
             <div class="form_group">
                 {{ form.email.label }}
                 {{ form.email }}
