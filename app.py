@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_login import LoginManager
-from forms import GymnastsForm, RegistrationForm, LoginForm
+from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm  # , #UpdateGymnastForm
 from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
@@ -56,7 +56,8 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(500), nullable=False)
 
     def __repr__(self):
-        return ''.join(['UserID: ', str(self.id), '\r\n', 'Email: ', self.email, 'Name: ', self.firstname, ' ', self.lastname])
+        return ''.join(
+            ['UserID: ', str(self.id), '\r\n', 'Email: ', self.email, 'Name: ', self.firstname, ' ', self.lastname])
 
 
 @app.route('/')
@@ -88,13 +89,27 @@ def add():
         return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 
+# @app.route('/gymnast_delete', methods=['GET', 'POST'])
+# @login_required
+# def gymnast_delete():
+#     id = Gymnasts.gymnast_id
+#     firstname = Gymnasts.firstname
+#     lastname = Gymnasts.lastname
+#     age = Gymnasts.age
+#     db.session.delete(id, firstname, lastname, age)
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         hash_pw = bcrypt.generate_password_hash(form.password.data)
 
-        user = Users(email=form.email.data, password=hash_pw, firstname=form.firstname.data, lastname=form.lastname.data)
+        user = Users(
+            email=form.email.data,
+            password=hash_pw,
+            firstname=form.firstname.data,
+            lastname=form.lastname.data
+        )
         db.session.add(user)
         db.session.commit()
 
@@ -123,6 +138,29 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.route('/view/', methods=['GET', 'POST'])
+def view():
+    form = ViewForm()
+    gymnast_all = Gymnasts.query.all()
+    if form.validate_on_submit():
+        gymnast_data = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).all()
+        return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
+    return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_all)
+
+
+# @app.route("/account", methods=['GET', 'POST'])
+# @login_required
+# def update():
+#     form = UpdateGymnastForm()
+#     if form.validate_on_submit():
+#          = form.firstname.data
+#          = form.lastname.data
+#          = form.age.data
+#     elif request.method == 'GET':
+#
+#     return render_template('update.html', title='Update Gymnast', form=form)
 
 @app.route('/create')
 def create():

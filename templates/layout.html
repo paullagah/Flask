@@ -14,6 +14,7 @@
         <a href="{{ url_for('about') }}">About</a>
         {% if current_user.is_authenticated == True %}
         <a href="{{ url_for('add') }}">Add a Gymnast</a>
+        <a href="{{ url_for('view') }}">Search Gymnasts</a>
         <a href="{{ url_for('logout') }}">Logout</a>
         {% else %}
         <a href="{{ url_for('login') }}">Login</a>

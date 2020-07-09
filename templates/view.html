@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+{#    <div class="data">#}
+{#        <a href="{{ url_for('view', number=1) }}">1</a>#}
+{#    </div>#}
+    <h1>Gymnast Search</h1>
+    <div class="form">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+        <div class="form_group">
+            {{ form.gymnast_id.label }}
+            {{ form.gymnast_id }}
+            {% if form.gymnast_id.errors %}
+                <div class="error">
+                    {% for error in form.gymnast_id.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        <br>
+        <br>
+        <div class="'form_group">
+            {{ form.submit }}
+        </div>
+        </form>
+    </div>
+
+    {% for Gymnasts in gymnasts %}
+
+        <div>
+            <h3>Gymnast ID: {{ Gymnasts.gymnast_id }}</h3>
+            <p> <b>First name: </b>{{ Gymnasts.firstname }}</p>
+            <p> <b>Last name: </b>{{ Gymnasts.lastname }}</p>
+            <p> <b>Age: </b>{{ Gymnasts.age }}</p>
+        </div>
+    {% endfor %}
+
+{% endblock %}
