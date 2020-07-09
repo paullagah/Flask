@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms import StringField, SubmitField, IntegerField, PasswordField
+from wtforms.validators import DataRequired, Length, NumberRange, Email, EqualTo, ValidationError
+
+# from app import Users
 
 
 class GymnastsForm(FlaskForm):
@@ -27,3 +29,31 @@ class GymnastsForm(FlaskForm):
     )
 
     submit = SubmitField('Add a Gymnast')
+
+
+class RegistrationForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[
+                            DataRequired(),
+                            Email()
+                        ]
+                        )
+    password = PasswordField('Password',
+                             validators=[
+                                 DataRequired()
+                             ]
+                             )
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[
+                                         DataRequired(),
+                                         EqualTo('password')
+                                     ]
+                                     )
+
+    submit = SubmitField('Sign Up')
+
+    # def validate_email(self, email):
+    #     user = Users.query.filter_by(email=email.data).first()
+    #
+    #     if user:
+    #         raise ValidationError('Email already in use')

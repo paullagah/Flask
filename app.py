@@ -1,13 +1,15 @@
 from flask import Flask, url_for, redirect
 from flask import render_template
+from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 
-from forms import GymnastsForm
+from forms import GymnastsForm, RegistrationForm
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 
-app.config['SECRET_KEY'] = '919c92fab903330df5b2f66c22d3b22b'       #environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = '919c92fab903330df5b2f66c22d3b22b'  # environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + \
                                         environ.get('MYSQL_USER') + \
@@ -19,7 +21,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + \
                                         environ.get('MYSQL_PORT') + \
                                         '/' + \
                                         environ.get('MYSQL_DB_NAME')
-
 
 db = SQLAlchemy(app)
 
@@ -39,6 +40,15 @@ class Gymnasts(db.Model):
         )
 
 
+class Users(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(300), nullable=False, unique=True)
+    password = db.Column(db.String(500), nullable=False)
+
+    def __repr__(self):
+        return ''.join(['UserID: ', str(self.id), '\r\n', 'Email: ', self.email])
+
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -49,6 +59,7 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
@@ -65,6 +76,21 @@ def add():
     else:
         return render_template('gymnast.html', title='Add a gymnast', form=form)
 
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hash_pw = bcrypt.generate_password_hash(form.password.data)
+
+        user = Users(email=form.email.data, password=hash_pw)
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('register'))
+    return render_template('register.html', title='Register', form=form)
+
+
 @app.route('/create')
 def create():
     db.create_all()
@@ -72,7 +98,6 @@ def create():
     db.session.add(gymnast)
     db.session.commit()
     return "Added the table and populated it with a Record" and redirect(url_for('home'))
-
 
 
 @app.route('/delete')
