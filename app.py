@@ -1,10 +1,11 @@
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for, redirect, request
 from flask import render_template
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
-
-from forms import GymnastsForm, RegistrationForm
+from flask_login import LoginManager
+from forms import GymnastsForm, RegistrationForm, LoginForm
+from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -23,6 +24,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + \
                                         environ.get('MYSQL_DB_NAME')
 
 db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
 
 class Gymnasts(db.Model):
@@ -40,7 +43,12 @@ class Gymnasts(db.Model):
         )
 
 
-class Users(db.Model):
+@login_manager.user_loader
+def load_user(id):
+    return Users.query.get(int(id))
+
+
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(300), nullable=False, unique=True)
     password = db.Column(db.String(500), nullable=False)
@@ -62,6 +70,7 @@ def about():
 
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     form = GymnastsForm()
     if form.validate_on_submit():
@@ -90,6 +99,28 @@ def register():
         return redirect(url_for('register'))
     return render_template('register.html', title='Register', form=form)
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect(url_for('home'))
+    return render_template('login.html', title='Login', form=form)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route('/create')
 def create():
