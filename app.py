@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_login import LoginManager
-from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm  # , #UpdateGymnastForm
+from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm
 from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
@@ -37,8 +37,8 @@ class Gymnasts(db.Model):
     def __repr__(self):
         return ''.join(
             [
-                'Name: ' + self.firstname, + ' ' + self.lastname + '\n'
-                                                                   'Gymnast ID: ' + self.gymnast_id
+                'Name: ' + self.firstname + ' ' + self.lastname + '\n'
+                'Gymnast ID: ' + str(self.gymnast_id) + ' Age: ' + str(self.age)
             ]
         )
 
@@ -150,17 +150,19 @@ def view():
     return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_all)
 
 
-# @app.route("/account", methods=['GET', 'POST'])
-# @login_required
-# def update():
-#     form = UpdateGymnastForm()
-#     if form.validate_on_submit():
-#          = form.firstname.data
-#          = form.lastname.data
-#          = form.age.data
-#     elif request.method == 'GET':
-#
-#     return render_template('update.html', title='Update Gymnast', form=form)
+@app.route("/update", methods=['GET', 'POST'])
+@login_required
+def update():
+    form = UpdateGymnastForm()
+    if form.validate_on_submit():
+        gymnast = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).first()
+        gymnast.firstname = form.firstname.data
+        gymnast.lastname = form.lastname.data
+        gymnast.age = form.age.data
+        db.session.commit()
+        return render_template('update.html', title='Update Gymnast', form=form, gymnasts=gymnast)
+    return render_template('update.html', title='Update Gymnast', form=form)
+
 
 @app.route('/create')
 def create():

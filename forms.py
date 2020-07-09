@@ -86,39 +86,47 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+
 class ViewForm(FlaskForm):
     gymnast_id = IntegerField('Gymnast ID',
                               validators=[
                                   DataRequired(),
                                   NumberRange(min=1, max=100)
-                     ]
-                )
+                              ]
+                              )
 
     submit = SubmitField('Search')
 
-# class UpdateGymnastForm(FlaskForm):
-#     firstname = StringField(
-#         'First Name',
-#         validators=[
-#             DataRequired(),
-#             Length(min=1, max=30)
-#         ]
-#     )
-#     lastname = StringField(
-#         'Last Name',
-#         validators=[
-#             DataRequired(),
-#             Length(min=1, max=30)
-#         ]
-#     )
-#     age = IntegerField(
-#         'Age',
-#         validators=[
-#             DataRequired(),
-#             NumberRange(min=0, max=110)
-#         ]
-#     )
-#     submit = SubmitField('Update')
+
+class UpdateGymnastForm(FlaskForm):
+    gymnast_id = IntegerField('Gymnast ID',
+                              validators=[
+                                  DataRequired(),
+                                  NumberRange(min=1, max=100)
+                              ]
+                              )
+    firstname = StringField(
+        'First Name',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+    lastname = StringField(
+        'Last Name',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+    age = IntegerField(
+        'Age',
+        validators=[
+            DataRequired(),
+            NumberRange(min=0, max=110)
+        ]
+    )
+    submit = SubmitField('Update')
 
     # def validate_email(self, email):
     #     user = Users.query.filter_by(email=email.data).first()
