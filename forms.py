@@ -138,6 +138,24 @@ class DeleteForm(FlaskForm):
                               )
     submit = SubmitField('Delete')
 
+class SkillsForm(FlaskForm):
+    name = StringField(
+        'First Name',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+    level = IntegerField(
+        'Level',
+        validators=[
+            DataRequired(),
+            NumberRange(min=0, max=110)
+        ]
+    )
+
+    submit = SubmitField('Add a Gymnast')
+
     # def validate_email(self, email):
     #     user = Users.query.filter_by(email=email.data).first()
     #

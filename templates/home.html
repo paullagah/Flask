@@ -2,14 +2,33 @@
 
 {% block body_content %}
     <h1>Homepage - Welcome!</h1>
-
+<table>
+    <tr>
+        <th><b>Gymnast ID: </b> </th>
+        <th><b>First name: </b></th>
+        <th><b>Last name: </b></th>
+        <th><b>Age: </b></th>
+    </tr>
     {% for Gymnasts in gymnasts %}
-        <div>
-            <h3>Gymnast ID: {{ Gymnasts.gymnast_id }}</h3>
-            <p> <b>First name: </b>{{ Gymnasts.firstname }}</p>
-            <p> <b>Last name: </b>{{ Gymnasts.lastname }}</p>
-            <p> <b>Age: </b>{{ Gymnasts.age }}</p>
+        <div class="content">
+        <tr>
+            <td>{{ Gymnasts.gymnast_id }}</td>
+            <td>{{ Gymnasts.firstname }}</td>
+            <td>{{ Gymnasts.lastname }}</td>
+            <td>{{ Gymnasts.age }}</td>
+            <td>
+                <form action="{{ url_for('update', up=Gymnasts.gymnast_id) }}">
+                    <button type="submit">Update</button>
+                </form>
+            </td><td>
+                <form action="{{ url_for('remove', delete=Gymnasts.gymnast_id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
         </div>
     {% endfor %}
+</table>
+
 
 {% endblock %}

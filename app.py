@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_login import LoginManager
-from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm, DeleteForm
+from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm, DeleteForm, SkillsForm
 from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
@@ -103,16 +103,13 @@ def add():
         return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 
-@app.route('/remove', methods=['GET', 'POST'])
+@app.route('/remove/<int:delete>', methods=['GET', 'POST'])
 @login_required
-def remove():
-    form = DeleteForm()
-    if form.validate_on_submit():
-        drop = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).first()
-        db.session.delete(drop)
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('delete.html', title='Delete a Gymnast', form=form)
+def remove(delete):
+    drop = Gymnasts.query.filter_by(gymnast_id=delete).first()
+    db.session.delete(drop)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -132,6 +129,69 @@ def register():
 
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/view/', methods=['GET', 'POST'])
+def view():
+    form = ViewForm()
+    if form.validate_on_submit():
+        gymnast_data = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).all()
+        return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
+    return render_template('view.html', title='View Gymnasts', form=form)
+
+
+@app.route("/update/<int:up>", methods=['GET', 'POST'])
+@login_required
+def update(up):
+    form = UpdateGymnastForm()
+    if form.validate_on_submit():
+        gymnast = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).first()
+        gymnast.firstname = form.firstname.data
+        gymnast.lastname = form.lastname.data
+        gymnast.age = form.age.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    elif request.method == 'GET':
+        upd = Gymnasts.query.filter_by(gymnast_id=up).first()
+        form.gymnast_id.data = upd.gymnast_id
+        form.firstname.data = upd.firstname
+        form.lastname.data = upd.lastname
+        form.age.data = upd.age
+    return render_template('update.html', title='Update Gymnast', form=form)
+
+
+@app.route('/add_skill', methods=['GET', 'POST'])
+@login_required
+def skill():
+    form = SkillsForm()
+    if form.validate_on_submit():
+        skill_data = Skills(
+            name=form.firstname.data,
+            level=form.level.data
+        )
+        db.session.add(skill_data)
+        db.session.commit()
+        return redirect(url_for('home'))
+    else:
+        return render_template('skill.html', title='Add a Skill', form=form)
+
+
+@app.route('/create')
+def create():
+    db.create_all()
+    gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=28)
+    skill = Skills(name='Front Flip', level='3', gymnast_id=1)
+    db.session.add(gymnast, skill)
+    db.session.commit()
+    return "Added the table and populated it with a Record" and redirect(url_for('home'))
+
+
+@app.route('/delete_all')
+def delete():
+    db.drop_all()
+    db.session.query(Gymnasts).delete()
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -155,47 +215,6 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-
-@app.route('/view/', methods=['GET', 'POST'])
-def view():
-    form = ViewForm()
-    if form.validate_on_submit():
-        gymnast_data = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).all()
-        return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
-    return render_template('view.html', title='View Gymnasts', form=form)
-
-
-@app.route("/update", methods=['GET', 'POST'])
-@login_required
-def update():
-    form = UpdateGymnastForm()
-    if form.validate_on_submit():
-        gymnast = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).first()
-        gymnast.firstname = form.firstname.data
-        gymnast.lastname = form.lastname.data
-        gymnast.age = form.age.data
-        db.session.commit()
-        return redirect(url_for('home'))
-    return render_template('update.html', title='Update Gymnast', form=form)
-
-
-@app.route('/create')
-def create():
-    db.create_all()
-    gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=28)
-    skill = Skills(name='Front Flip', level='3', gymnast_id=1)
-    db.session.add(gymnast, skill)
-    db.session.commit()
-    return "Added the table and populated it with a Record" and redirect(url_for('home'))
-
-
-@app.route('/delete')
-def delete():
-    db.drop_all()
-    db.session.query(Gymnasts).delete()
-    db.session.commit()
-    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
