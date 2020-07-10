@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+
+    <h1>Delete a Gymnast<h1>
+    <div class="form">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+        <div class="form_group">
+            {{ form.gymnast_id.label }}
+            {{ form.gymnast_id }}
+            {% if form.gymnast_id.errors %}
+                <div class="error">
+                    {% for error in form.gymnast_id.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        <br>
+        <br>
+        </div>
+        <div class="'form_group">
+            {{ form.submit }}
+        </div>
+        </form>
+    </div>
+
+{% endblock %}

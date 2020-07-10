@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_login import LoginManager
-from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm
+from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm, DeleteForm
 from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
@@ -38,7 +38,8 @@ class Gymnasts(db.Model):
         return ''.join(
             [
                 'Name: ' + self.firstname + ' ' + self.lastname + '\n'
-                'Gymnast ID: ' + str(self.gymnast_id) + ' Age: ' + str(self.age)
+                                                                  'Gymnast ID: ' + str(
+                    self.gymnast_id) + ' Age: ' + str(self.age)
             ]
         )
 
@@ -89,14 +90,17 @@ def add():
         return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 
-# @app.route('/gymnast_delete', methods=['GET', 'POST'])
-# @login_required
-# def gymnast_delete():
-#     id = Gymnasts.gymnast_id
-#     firstname = Gymnasts.firstname
-#     lastname = Gymnasts.lastname
-#     age = Gymnasts.age
-#     db.session.delete(id, firstname, lastname, age)
+@app.route('/remove', methods=['GET', 'POST'])
+@login_required
+def remove():
+    form = DeleteForm()
+    if form.validate_on_submit():
+        drop = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).first()
+        db.session.delete(drop)
+        db.session.commit()
+        return redirect(url_for('home'))
+    return render_template('delete.html', title='Delete a Gymnast', form=form)
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -160,7 +164,7 @@ def update():
         gymnast.lastname = form.lastname.data
         gymnast.age = form.age.data
         db.session.commit()
-        return render_template('update.html', title='Update Gymnast', form=form, gymnasts=gymnast)
+        return redirect(url_for('home'))
     return render_template('update.html', title='Update Gymnast', form=form)
 
 

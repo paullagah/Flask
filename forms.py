@@ -128,6 +128,15 @@ class UpdateGymnastForm(FlaskForm):
     )
     submit = SubmitField('Update')
 
+class DeleteForm(FlaskForm):
+    gymnast_id = IntegerField('Gymnast ID',
+                              validators=[
+                                  DataRequired(),
+                                  NumberRange(min=1, max=100)
+                              ]
+                              )
+    submit = SubmitField('Delete')
+
     # def validate_email(self, email):
     #     user = Users.query.filter_by(email=email.data).first()
     #
