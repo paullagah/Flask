@@ -28,6 +28,32 @@
         </tr>
         </div>
     {% endfor %}
+</table><table>
+    <tr>
+        <th><b>Skill ID: </b> </th>
+        <th><b>Name: </b></th>
+        <th><b>Level: </b></th>
+        <th><b>Gymnasts Completed: </b></th>
+    </tr>
+    {% for Skills in skill %}
+        <div class="content">
+        <tr>
+            <td>{{ Skills.skill_id }}</td>
+            <td>{{ Skills.name }}</td>
+            <td>{{ Skills.level }}</td>
+            <td>{{ Skills.gymnast_id }}</td>
+            <td>
+                <form action="{{ url_for('update_skill', up_skill=Skills.skill_id) }}">
+                    <button type="submit">Update</button>
+                </form>
+            </td><td>
+                <form action="{{ url_for('remove_skill', delete_skill=Skills.skill_id) }}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </div>
+    {% endfor %}
 </table>
 
 

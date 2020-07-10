@@ -98,6 +98,17 @@ class ViewForm(FlaskForm):
     submit = SubmitField('Search')
 
 
+class SearchForm(FlaskForm):
+    skill_id = IntegerField('Skill ID',
+                            validators=[
+                                DataRequired(),
+                                NumberRange(min=1, max=100)
+                            ]
+                            )
+
+    submit = SubmitField('Search')
+
+
 class UpdateGymnastForm(FlaskForm):
     gymnast_id = IntegerField('Gymnast ID',
                               validators=[
@@ -138,9 +149,10 @@ class DeleteForm(FlaskForm):
                               )
     submit = SubmitField('Delete')
 
+
 class SkillsForm(FlaskForm):
     name = StringField(
-        'First Name',
+        'Skill Name',
         validators=[
             DataRequired(),
             Length(min=1, max=30)
@@ -153,8 +165,45 @@ class SkillsForm(FlaskForm):
             NumberRange(min=0, max=110)
         ]
     )
+    gymnast_id = IntegerField('Gymnast ID',
+                              validators=[
+                                  DataRequired(),
+                                  NumberRange(min=1, max=100)
+                              ]
+                              )
 
-    submit = SubmitField('Add a Gymnast')
+    submit = SubmitField('Add a Skill')
+
+
+class UpdateSkillsForm(FlaskForm):
+    skill_id = IntegerField('Gymnast ID',
+                            validators=[
+                                DataRequired(),
+                                NumberRange(min=1, max=100)
+                            ]
+                            )
+    name = StringField(
+        'Skill Name',
+        validators=[
+            DataRequired(),
+            Length(min=1, max=30)
+        ]
+    )
+    level = IntegerField(
+        'Level',
+        validators=[
+            DataRequired(),
+            NumberRange(min=0, max=110)
+        ]
+    )
+    gymnast_id = IntegerField('Gymnast ID',
+                              validators=[
+                                  DataRequired(),
+                                  NumberRange(min=1, max=100)
+                              ]
+                              )
+
+    submit = SubmitField('Update Skill')
 
     # def validate_email(self, email):
     #     user = Users.query.filter_by(email=email.data).first()

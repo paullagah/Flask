@@ -1,11 +1,25 @@
 {% extends "layout.html" %}
 
 {% block body_content %}
-  <h1>Add a Skill</h1>
-   <div class="form">
-        <form method="post" action="">
+
+    <h1>Update Skill Entry</h1>
+    <div class="form">
+        <form method="POST" action="">
             {{ form.hidden_tag() }}
-            <div class="form-group">
+        <div class="form_group">
+            {{ form.skill_id.label }}
+            {{ form.skill_id }}
+            {% if form.skill_id.errors %}
+                <div class="error">
+                    {% for error in form.skill_id.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        <br>
+        <br>
+        </div>
+        <div class="form_group">
             {{ form.name.label }}
             {{ form.name }}
             {% if form.name.errors %}
@@ -15,12 +29,12 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            </div>
-            <br>
-            <div class="form-group">
+        <br>
+        <br>
+        </div>
+        <div class="form_group">
             {{ form.level.label }}
             {{ form.level }}
-
             {% if form.level.errors %}
                 <div class="error">
                     {% for error in form.level.errors %}
@@ -28,12 +42,12 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            </div>
-            <br>
-            <div class="form-group">
+        <br>
+        <br>
+        </div>
+        <div class="form_group">
             {{ form.gymnast_id.label }}
             {{ form.gymnast_id }}
-
             {% if form.gymnast_id.errors %}
                 <div class="error">
                     {% for error in form.gymnast_id.errors %}
@@ -41,9 +55,14 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            </div>
-            <br>
+        <br>
+        <br>
+        </div>
+        <div class="'form_group">
             {{ form.submit }}
+        </div>
         </form>
-   </div>
+    </div>
+
+
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block body_content %}
+
+    <h1>Skill Search</h1>
+    <div class="form">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+        <div class="form_group">
+            {{ form.skill_id.label }}
+            {{ form.skill_id }}
+            {% if form.skill_id.errors %}
+                <div class="error">
+                    {% for error in form.skill_id.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        <br>
+        <br>
+        </div>
+        <div class="'form_group">
+            {{ form.submit }}
+        </div>
+        </form>
+    </div>
+
+<br>
+<table>
+<tr>
+    <th>Skill ID:</th>
+    <th>Name: </th>
+    <th>Level: </th>
+    <th>Gymnast ID: </th>
+</tr>
+
+    {% for Skills in skill %}
+
+        <div>
+            <tr>
+            <td>{{ Skills.skill_id }}</td>
+            <td> {{ Skills.name }}</td>
+            <td> {{ Skills.level }}</td>
+            <td> {{ Skills.gymnast_id }}</td>
+        </tr>
+        </div>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

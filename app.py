@@ -4,7 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from os import environ
 from flask_login import LoginManager
-from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm, DeleteForm, SkillsForm
+from forms import GymnastsForm, RegistrationForm, LoginForm, ViewForm, UpdateGymnastForm, DeleteForm, SkillsForm, \
+    UpdateSkillsForm, SearchForm
 from flask_login import login_user, current_user, logout_user, login_required, UserMixin
 
 app = Flask(__name__)
@@ -66,7 +67,7 @@ class Skills(db.Model):
     skill_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     level = db.Column(db.Integer, nullable=True)
-    gymnast_id = db.Column(db.Integer, db.ForeignKey('gymnasts.gymnast_id'), nullable=False)
+    gymnast_id = db.Column(db.Integer, db.ForeignKey('gymnasts.gymnast_id'), nullable=True)
 
     def __repr__(self):
         return ''.join(
@@ -78,7 +79,8 @@ class Skills(db.Model):
 @app.route('/home')
 def home():
     gymnast_data = Gymnasts.query.all()
-    return render_template('home.html', title='Homepage', gymnasts=gymnast_data)
+    skill_data = Skills.query.all()
+    return render_template('home.html', title='Homepage', gymnasts=gymnast_data, skill=skill_data)
 
 
 @app.route('/about')
@@ -112,6 +114,15 @@ def remove(delete):
     return redirect(url_for('home'))
 
 
+@app.route('/remove_skill/<int:delete_skill>', methods=['GET', 'POST'])
+@login_required
+def remove_skill(delete_skill):
+    drop = Skills.query.filter_by(gymnast_id=delete_skill).first()
+    db.session.delete(drop)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -139,6 +150,13 @@ def view():
         return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
     return render_template('view.html', title='View Gymnasts', form=form)
 
+@app.route('/search_skill/', methods=['GET', 'POST'])
+def search_skill():
+    form = SearchForm()
+    if form.validate_on_submit():
+        skill_data = Skills.query.filter_by(skill_id=form.skill_id.data).all()
+        return render_template('search_skill.html', title='Search Skills', form=form, skill=skill_data)
+    return render_template('search_skill.html', title='Search Skills', form=form)
 
 @app.route("/update/<int:up>", methods=['GET', 'POST'])
 @login_required
@@ -160,14 +178,34 @@ def update(up):
     return render_template('update.html', title='Update Gymnast', form=form)
 
 
+@app.route("/update_skill/<int:up_skill>", methods=['GET', 'POST'])
+@login_required
+def update_skill(up_skill):
+    form = UpdateSkillsForm()
+    if form.validate_on_submit():
+        skill = Skills.query.filter_by(skill_id=form.skill_id.data).first()
+        skill.name = form.name.data
+        skill.level = form.level.data
+        skill.gymnast_id = form.gymnast_id.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    elif request.method == 'GET':
+        upd = Skills.query.filter_by(skill_id=up_skill).first()
+        form.skill_id.data = upd.skill_id
+        form.name.data = upd.name
+        form.level.data = upd.level
+    return render_template('updateskill.html', title='Update Gymnast', form=form)
+
+
 @app.route('/add_skill', methods=['GET', 'POST'])
 @login_required
-def skill():
+def add_skill():
     form = SkillsForm()
     if form.validate_on_submit():
         skill_data = Skills(
-            name=form.firstname.data,
-            level=form.level.data
+            name=form.name.data,
+            level=form.level.data,
+            gymnast_id=form.gymnast_id.data
         )
         db.session.add(skill_data)
         db.session.commit()
