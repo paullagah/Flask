@@ -33,6 +33,7 @@ class Gymnasts(db.Model):
     firstname = db.Column(db.String(30), nullable=False)
     lastname = db.Column(db.String(30), nullable=False)
     age = db.Column(db.Integer, nullable=False)
+    athlete = db.relationship('Skills', backref='gym', lazy=True)
 
     def __repr__(self):
         return ''.join(
@@ -59,6 +60,18 @@ class Users(db.Model, UserMixin):
     def __repr__(self):
         return ''.join(
             ['UserID: ', str(self.id), '\r\n', 'Email: ', self.email, 'Name: ', self.firstname, ' ', self.lastname])
+
+
+class Skills(db.Model):
+    skill_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    level = db.Column(db.Integer, nullable=True)
+    gymnast_id = db.Column(db.Integer, db.ForeignKey('gymnasts.gymnast_id'), nullable=False)
+
+    def __repr__(self):
+        return ''.join(
+            ['Skill ID: ' + self.skill_id + '\r\n' + 'Name: ' + self.name + '\r\n' + 'Level' + self.level + '\r\n']
+        )
 
 
 @app.route('/')
@@ -117,7 +130,7 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
 
@@ -147,11 +160,10 @@ def logout():
 @app.route('/view/', methods=['GET', 'POST'])
 def view():
     form = ViewForm()
-    gymnast_all = Gymnasts.query.all()
     if form.validate_on_submit():
         gymnast_data = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).all()
         return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
-    return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_all)
+    return render_template('view.html', title='View Gymnasts', form=form)
 
 
 @app.route("/update", methods=['GET', 'POST'])
@@ -172,7 +184,8 @@ def update():
 def create():
     db.create_all()
     gymnast = Gymnasts(firstname='Paul', lastname='Lagah', age=28)
-    db.session.add(gymnast)
+    skill = Skills(name='Front Flip', level='3', gymnast_id=1)
+    db.session.add(gymnast, skill)
     db.session.commit()
     return "Added the table and populated it with a Record" and redirect(url_for('home'))
 

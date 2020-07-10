@@ -128,6 +128,7 @@ class UpdateGymnastForm(FlaskForm):
     )
     submit = SubmitField('Update')
 
+
 class DeleteForm(FlaskForm):
     gymnast_id = IntegerField('Gymnast ID',
                               validators=[
