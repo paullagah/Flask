@@ -150,6 +150,7 @@ def view():
         return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
     return render_template('view.html', title='View Gymnasts', form=form)
 
+
 @app.route('/search_skill/', methods=['GET', 'POST'])
 def search_skill():
     form = SearchForm()
@@ -157,6 +158,7 @@ def search_skill():
         skill_data = Skills.query.filter_by(skill_id=form.skill_id.data).all()
         return render_template('search_skill.html', title='Search Skills', form=form, skill=skill_data)
     return render_template('search_skill.html', title='Search Skills', form=form)
+
 
 @app.route("/update/<int:up>", methods=['GET', 'POST'])
 @login_required

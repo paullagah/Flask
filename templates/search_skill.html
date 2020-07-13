@@ -34,17 +34,17 @@
     <th>Gymnast ID: </th>
 </tr>
 
-    {% for Skills in skill %}
+{% for Skills in skill %}
 
-        <div>
-            <tr>
-            <td>{{ Skills.skill_id }}</td>
-            <td> {{ Skills.name }}</td>
-            <td> {{ Skills.level }}</td>
-            <td> {{ Skills.gymnast_id }}</td>
-        </tr>
-        </div>
-    {% endfor %}
+    <div>
+        <tr>
+        <td>{{ Skills.skill_id }}</td>
+        <td> {{ Skills.name }}</td>
+        <td> {{ Skills.level }}</td>
+        <td> {{ Skills.gymnast_id }}</td>
+    </tr>
+    </div>
+{% endfor %}
 
 </table>
 
