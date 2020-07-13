@@ -117,7 +117,7 @@ def remove(delete):
 @app.route('/remove_skill/<int:delete_skill>', methods=['GET', 'POST'])
 @login_required
 def remove_skill(delete_skill):
-    drop = Skills.query.filter_by(gymnast_id=delete_skill).first()
+    drop = Skills.query.filter_by(skill_id=delete_skill).first()
     db.session.delete(drop)
     db.session.commit()
     return redirect(url_for('home'))

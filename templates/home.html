@@ -22,7 +22,7 @@
                 </form>
             </td><td>
                 <form action="{{ url_for('remove', delete=Gymnasts.gymnast_id) }}">
-                    <button type="submit">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                 </form>
             </td>
         </tr>
@@ -31,9 +31,9 @@
 </table><table>
     <tr>
         <th><b>Skill ID: </b> </th>
-        <th><b>Name: </b></th>
+        <th><b>Skill Name: </b></th>
         <th><b>Level: </b></th>
-        <th><b>Gymnasts Completed: </b></th>
+        <th><b>Gymnasts: </b></th>
     </tr>
     {% for Skills in skill %}
         <div class="content">
@@ -48,7 +48,7 @@
                 </form>
             </td><td>
                 <form action="{{ url_for('remove_skill', delete_skill=Skills.skill_id) }}">
-                    <button type="submit">Delete</button>
+                    <button type="submit" onclick="return confirm('Are you sure you want to delete?')">Delete</button>
                 </form>
             </td>
         </tr>
