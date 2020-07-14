@@ -80,11 +80,13 @@ class Skills(db.Model):
 def home():
     gymnast_data = Gymnasts.query.all()
     skill_data = Skills.query.all()
+    print(current_user)
     return render_template('home.html', title='Homepage', gymnasts=gymnast_data, skill=skill_data)
 
 
 @app.route('/about')
 def about():
+    print(current_user)
     return render_template('about.html', title='About')
 
 
@@ -100,8 +102,10 @@ def add():
         )
         db.session.add(gymnast_data)
         db.session.commit()
+        print(current_user)
         return redirect(url_for('home'))
     else:
+        print(current_user)
         return render_template('gymnast.html', title='Add a gymnast', form=form)
 
 
@@ -111,6 +115,7 @@ def remove(delete):
     drop = Gymnasts.query.filter_by(gymnast_id=delete).first()
     db.session.delete(drop)
     db.session.commit()
+    print(current_user)
     return redirect(url_for('home'))
 
 
@@ -120,6 +125,7 @@ def remove_skill(delete_skill):
     drop = Skills.query.filter_by(skill_id=delete_skill).first()
     db.session.delete(drop)
     db.session.commit()
+    print(current_user)
     return redirect(url_for('home'))
 
 
@@ -137,7 +143,7 @@ def register():
         )
         db.session.add(user)
         db.session.commit()
-
+        print(current_user)
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -147,6 +153,7 @@ def view():
     form = ViewForm()
     if form.validate_on_submit():
         gymnast_data = Gymnasts.query.filter_by(gymnast_id=form.gymnast_id.data).all()
+        print(current_user)
         return render_template('view.html', title='View Gymnasts', form=form, gymnasts=gymnast_data)
     return render_template('view.html', title='View Gymnasts', form=form)
 
@@ -156,6 +163,7 @@ def search_skill():
     form = SearchForm()
     if form.validate_on_submit():
         skill_data = Skills.query.filter_by(skill_id=form.skill_id.data).all()
+        print(current_user)
         return render_template('search_skill.html', title='Search Skills', form=form, skill=skill_data)
     return render_template('search_skill.html', title='Search Skills', form=form)
 
@@ -170,6 +178,7 @@ def update(up):
         gymnast.lastname = form.lastname.data
         gymnast.age = form.age.data
         db.session.commit()
+        print(current_user)
         return redirect(url_for('home'))
     elif request.method == 'GET':
         upd = Gymnasts.query.filter_by(gymnast_id=up).first()
@@ -177,6 +186,7 @@ def update(up):
         form.firstname.data = upd.firstname
         form.lastname.data = upd.lastname
         form.age.data = upd.age
+        print(current_user)
     return render_template('update.html', title='Update Gymnast', form=form)
 
 
@@ -190,12 +200,14 @@ def update_skill(up_skill):
         skill.level = form.level.data
         skill.gymnast_id = form.gymnast_id.data
         db.session.commit()
+        print(current_user)
         return redirect(url_for('home'))
     elif request.method == 'GET':
         upd = Skills.query.filter_by(skill_id=up_skill).first()
         form.skill_id.data = upd.skill_id
         form.name.data = upd.name
         form.level.data = upd.level
+        print(current_user)
     return render_template('updateskill.html', title='Update Gymnast', form=form)
 
 
@@ -211,8 +223,10 @@ def add_skill():
         )
         db.session.add(skill_data)
         db.session.commit()
+        print(current_user)
         return redirect(url_for('home'))
     else:
+        print(current_user)
         return render_template('skill.html', title='Add a Skill', form=form)
 
 
@@ -223,6 +237,7 @@ def create():
     skill = Skills(name='Front Flip', level='3', gymnast_id=1)
     db.session.add(gymnast, skill)
     db.session.commit()
+    print(current_user)
     return "Added the table and populated it with a Record" and redirect(url_for('home'))
 
 
@@ -230,7 +245,10 @@ def create():
 def delete():
     db.drop_all()
     db.session.query(Gymnasts).delete()
+    db.session.query(Users).delete()
+    db.session.query(Skills).delete()
     db.session.commit()
+    print(current_user)
     return redirect(url_for('home'))
 
 
