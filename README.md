@@ -42,24 +42,24 @@ Here is a list of technologies used :
 | Required  | Used    |
 |-----------|---------|
 | Kanban Board |  Trello |
-| Database |MYSQL|
-| Programming |Python  |
-| Front End | Flask/HTML |
-| Version Control | Git |
-| CI Server | Jenkins |
-| Cloud Server | Google Cloud Platform (GCP) |
+| Database | MYSQL - Version 5.7 |
+| Programming | Python - Version 3.8.0  |
+| Front End | HTML5 |
+| Version Control | Git (on Ubuntu 20.04 LTS) - Version 2.27 |
+| CI Server | Jenkins - Version 2.240 |
+| Cloud Server | Google Cloud Platform (GCP) - Free Version License |
 
 Python Modules used in the project were:
-* Flask
-* Jinja2
-* Flask-SQLAlchemy
-* SQLAlchemy
-* pymysql
-* WTForms
-* Flask-WTF
-* Flask-Bcrypt
-* email_validator
-* flask-login
+* Flask - 1.1.2
+* Jinja2 - 2.11.2
+* Flask-SQLAlchemy - 2.4.3
+* SQLAlchemy - 1.3.10
+* pymysql - 0.9.3
+* WTForms - 2.3.1
+* Flask-WTF - 0.14.3
+* Flask-Bcrypt - 0.7.1
+* email validator - 1.1.1
+* flask-login - 0.5.0
 
 ## CI Pipeline
 Below is my CI Pipeline Diagram with the technologies explained above:
