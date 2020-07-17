@@ -70,6 +70,7 @@ As the project went on the Front end design improved in comparison to my initial
 ![Initial Delete](https://github.com/paullagah/DevOps/blob/master/WireframeDelete.JPG)
 
 
+
 #### Completed Design
 ![Final Homepage](https://github.com/paullagah/DevOps/blob/master/HomeLoggedOut.JPG)
 ![Final Registration Page](https://github.com/paullagah/DevOps/blob/master/registration.JPG)
