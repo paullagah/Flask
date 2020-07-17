@@ -36,6 +36,12 @@ This app will allow the users to:
 * Update a Gymnasts entry
 * Delete a Gymnast from the database
 
+The new functionality added to the website were:
+* Registration page 
+* Login Page
+
+![MoSCoW](https://github.com/paullagah/DevOps/blob/master/Trello1.JPG)
+
 ## Technologies
 Here is a list of technologies used :
 
@@ -107,3 +113,19 @@ As the project went on the Front end design improved in comparison to my initial
 ![Final Search Skill](https://github.com/paullagah/DevOps/blob/master/SkillSearch.JPG)
 ![Final Delete Prompt](https://github.com/paullagah/DevOps/blob/master/DeletePrompt.JPG)
 ![Final About Page](https://github.com/paullagah/DevOps/blob/master/About.JPG)
+
+
+## Risk Assessment
+
+![Risk Assessment](https://github.com/paullagah/DevOps/blob/master/Risk%20assessment.JPG)
+
+## Difficulties
+The plan at the start was going to Create a 'Level' table, but this would have been very 
+time intensive to create, and could potentially not have completed the project within the timescale required.
+
+## Future Improvements
+* Website Logo
+* More time for more modern design
+* Allow assignment of 1 skill to multiple gymnasts
+* Ability to search for all Gymnasts within a specific level
+* Ensure all best practices were completed (sometimes forgetting to work off Development branch)
