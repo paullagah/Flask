@@ -36,30 +36,36 @@ This app will allow the users to:
 * Update a Gymnasts entry
 * Delete a Gymnast from the database
 
+The new functionality added to the website were:
+* Registration page 
+* Login Page
+
+![MoSCoW](https://github.com/paullagah/DevOps/blob/master/Trello1.JPG)
+
 ## Technologies
 Here is a list of technologies used :
 
 | Required  | Used    |
 |-----------|---------|
 | Kanban Board |  Trello |
-| Database |MYSQL|
-| Programming |Python  |
-| Front End | Flask/HTML |
-| Version Control | Git |
-| CI Server | Jenkins |
-| Cloud Server | Google Cloud Platform (GCP) |
+| Database | MYSQL - Version 5.7 |
+| Programming | Python - Version 3.8.0  |
+| Front End | HTML5 |
+| Version Control | Git (on Ubuntu 20.04 LTS) - Version 2.27 |
+| CI Server | Jenkins - Version 2.240 |
+| Cloud Server | Google Cloud Platform (GCP) - Free Version License |
 
 Python Modules used in the project were:
-* Flask
-* Jinja2
-* Flask-SQLAlchemy
-* SQLAlchemy
-* pymysql
-* WTForms
-* Flask-WTF
-* Flask-Bcrypt
-* email_validator
-* flask-login
+* Flask - 1.1.2
+* Jinja2 - 2.11.2
+* Flask-SQLAlchemy - 2.4.3
+* SQLAlchemy - 1.3.10
+* pymysql - 0.9.3
+* WTForms - 2.3.1
+* Flask-WTF - 0.14.3
+* Flask-Bcrypt - 0.7.1
+* email validator - 1.1.1
+* flask-login - 0.5.0
 
 ## CI Pipeline
 Below is my CI Pipeline Diagram with the technologies explained above:
@@ -107,3 +113,19 @@ As the project went on the Front end design improved in comparison to my initial
 ![Final Search Skill](https://github.com/paullagah/DevOps/blob/master/SkillSearch.JPG)
 ![Final Delete Prompt](https://github.com/paullagah/DevOps/blob/master/DeletePrompt.JPG)
 ![Final About Page](https://github.com/paullagah/DevOps/blob/master/About.JPG)
+
+
+## Risk Assessment
+
+![Risk Assessment](https://github.com/paullagah/DevOps/blob/master/Risk%20assessment.JPG)
+
+## Difficulties
+The plan at the start was going to Create a 'Level' table, but this would have been very 
+time intensive to create, and could potentially not have completed the project within the timescale required.
+
+## Future Improvements
+* Website Logo
+* More time for more modern design
+* Allow assignment of 1 skill to multiple gymnasts
+* Ability to search for all Gymnasts within a specific level
+* Ensure all best practices were completed (sometimes forgetting to work off Development branch)
