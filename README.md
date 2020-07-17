@@ -70,5 +70,15 @@ As the project went on the Front end design improved in comparison to my initial
 ![Initial Delete](https://github.com/paullagah/DevOps/blob/master/WireframeDelete.JPG)
 
 
-
+#### Completed Design
 ![Final Homepage](https://github.com/paullagah/DevOps/blob/master/HomeLoggedOut.JPG)
+![Final Registration Page](https://github.com/paullagah/DevOps/blob/master/registration.JPG)
+![Final Login Page](https://github.com/paullagah/DevOps/blob/master/Login.JPG)
+![Final Add Gymnast](https://github.com/paullagah/DevOps/blob/master/AddGymnast.JPG)
+![Final Add Skill](https://github.com/paullagah/DevOps/blob/master/AddSkill.JPG)
+![Final Update Gymnast](https://github.com/paullagah/DevOps/blob/master/UpdateGymnast.JPG)
+![Final Update Skill](https://github.com/paullagah/DevOps/blob/master/UpdateSkill.JPG)
+![Final Search Gymnast](https://github.com/paullagah/DevOps/blob/master/SearchGymnast.JPG)
+![Final Search Skill](https://github.com/paullagah/DevOps/blob/master/SkillSearch.JPG)
+![Final Delete Prompt](https://github.com/paullagah/DevOps/blob/master/DeletePrompt.JPG)
+![Final About Page](https://github.com/paullagah/DevOps/blob/master/About.JPG)
