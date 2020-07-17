@@ -1,5 +1,16 @@
 # Gymnast Web Application 
 ###### by Paul Lagah
+## Contents
+* Project Description
+* Functionality
+* Technologies
+* CI Pipeline
+* Data
+* Front-End Design 
+* Risk Assessment
+* Difficulties
+* Future Improvements
+
 ## Project Description
 This project has been to build an application with **Create**, **Read**, **Update** and **Delete** functionality. 
 The project is to make an application for the Gymnastics clubs to Monitor and manage Gymnast details.
