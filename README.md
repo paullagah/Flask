@@ -60,5 +60,15 @@ for security purposes only Coaches/Gymnastic Staff should be able to make change
 This required a stand-alone table to be set for the Coaches as the implemented "Users" table that you can see above.
 
 ## Front-End Design
+As the project went on the Front end design improved in comparison to my initial Wireframe design.
 
-![Final Homepage](https://github.com/paullagah/DevOps/blob/master/HomeLoggedOut.JPG) ![Initial Homepage](https://github.com/paullagah/DevOps/blob/master/WireframeHome.JPG)
+#### Wireframe Initial Design
+![Initial Homepage](https://github.com/paullagah/DevOps/blob/master/WireframeHome.JPG)
+![Initial Add](https://github.com/paullagah/DevOps/blob/master/WireframeAdd.JPG)
+![Initial Update](https://github.com/paullagah/DevOps/blob/master/WireframeUpdate.JPG)
+![Initial Search](https://github.com/paullagah/DevOps/blob/master/WireframeCheck.JPG)
+![Initial Delete](https://github.com/paullagah/DevOps/blob/master/WireframeDelete.JPG)
+
+
+
+![Final Homepage](https://github.com/paullagah/DevOps/blob/master/HomeLoggedOut.JPG)
