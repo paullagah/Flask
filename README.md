@@ -52,6 +52,7 @@ The new functionality added to the website were:
 * Login Page
 
 ![MoSCoW](https://github.com/paullagah/DevOps/blob/master/Trello1.JPG)
+![Sprint Timeline](https://github.com/paullagah/DevOps/blob/master/Sprint%20Timeline.JPG)
 
 ## Technologies
 Here is a list of technologies used :
